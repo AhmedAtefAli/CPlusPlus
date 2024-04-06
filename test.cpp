@@ -25,11 +25,39 @@ public:
   static int test;
 };
 
-// int person::test = 5;
+struct add {
+  add()
+  {
+    ++count;
+  }
+  ~add() 
+  {
+    --count;
+  }
+  add(int value) : num(value) {++count;}
+  int getNum() {
+    cout << "add::getNum()" << endl;
+    count++;
+    return num;
+  }
 
+  void setNum(int num) {
+    cout << "add::setNum(int num)" << endl;
+    this->num = num;
+        count++;
+  }
+   void showCount() const
+  {
+    cout << "Number of objects are : "<< count << endl;
+  }
+  int num{0};
+  static int count;
+};
+
+int add::count{0};
 int main() {
 
-  cout << person::test << endl;
+  // cout << person::test << endl;
   // char buf[256];
   // cout << " please enter your full name : ";
   // cin.getline(buf, 64, '\n');
@@ -37,5 +65,9 @@ int main() {
   //// Base *instance = new Derived;
   //// instance->Func();
   //// delete instance;
+  add obj(0);
+  const add obj1(5);
+  obj.setNum(5);
+  obj1.showCount();
   return 0;
 }
