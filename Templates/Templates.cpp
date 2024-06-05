@@ -1,68 +1,59 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <cstring>
+#include <algorithm>
+#include "Templates.hpp"
 
-
-template<typename T>
-T Max(T x, T y)
+// explicit template specialization
+template <> const char* Max<const char*,4>(const char* (&arr)[4])
 {
-    std::cout << "T Max(T x, T y)"<< std::endl;
-    return x < y ? y : x;
-}
-
-template<typename T>
-T Add(T x, T y)
-{
-    return x + y;
-}
-
-template<typename T>
-T ArraySum(const T  * arr, std::size_t Sz)
-{
-    T sum = 0;
-    for(int idx = 0; idx < Sz; idx++)
+    const char * max = arr[0];
+    for(int idx = 0;idx < 4;idx++)
     {
-        sum += arr[idx];
-    }
-
-    return sum;
-}
-
-template<typename T> 
-T Max(const T * arr, std::size_t Sz)
-{
-    T Max = arr[0];
-    for(int idx = 0;idx < Sz;idx++)
-    {
-        if(Max < arr[idx])
+        if(strcmp(max,arr[idx]) < 0)
         {
-            Max = arr[idx];
+            max = arr[idx];
         }
     }
-
-    return Max;
+    return max;
 }
 
-template<typename T>
-std::pair<T,T> MinMax(const T * arr, std::size_t Sz)
+template <> std::string Max<std::string, 4>(std::string (&arr)[4])
 {
-    std::pair<T,T> pair{};
+    auto str = std::max_element(std::begin(arr),std::end(arr));
+    return *str;
+}
+
+template <> std::pair<const char *, const char *> MinMax<const char *, 4>(const char * (&arr)[4])
+{
+    std::pair<const char *,const char *> pair{};
     pair.first = arr[0];
     pair.second = arr[0];
 
-    for(int idx = 0;idx < Sz;idx++)
+    for(int idx = 0;idx < 4;idx++)
     {
-        if(pair.first > arr[idx])
-        {
-            pair.first = arr[idx];
-        }
-        if(pair.second < arr[idx])
+        if(strcmp(pair.second,arr[idx]) < 0)
         {
             pair.second = arr[idx];
         }
+
+        if(strcmp(pair.first,arr[idx]) > 0)
+        {
+            pair.first = arr[idx];
+        }
+
     }
 
     return pair;
+}
+
+template<> std::pair<std::string,std::string> MinMax<std::string,4>(std::string (&arr)[4])
+{
+    auto max = std::max_element(std::begin(arr),std::end(arr));
+    auto min = std::min_element(std::begin(arr),std::end(arr));
+
+    return std::pair<std::string,std::string>{*min,*max};
 }
 
 int main()
@@ -72,11 +63,24 @@ int main()
     std::cout << std::endl<< num << std::endl;
     auto num2 = Max(3.5f,5.3f);
     std::cout << num2 << std::endl;
-    auto num3 = Max(arr, 8);
+    auto num3 = Max(arr);
     std::cout << num3 << std::endl;
-    auto sum = ArraySum(arr,8);
+    auto sum = ArraySum(arr);
     std::cout << "Sum of array : "<< sum<<std::endl;
-    auto pair = MinMax(arr,8);
+    auto pair = MinMax(arr);
     std::cout << " Min of arr : "<<pair.first<<" , Max of arr : "<<pair.second<<std::endl;
+
+    const char* str[4] {"D","C","B","A"};
+    std::cout << Max(str)<<std::endl;
+    auto strPair = MinMax(str);
+    std::cout << " Min of str : "<<strPair.first<< " , Max of str :  "<< strPair.second<<std::endl;
+
+    std::cout << "string literals usage "<<std::endl;
+
+    std::string string[4] {"D","C","B","A"};
+    std::cout << Max(string)<<std::endl;
+    auto StringPair = MinMax(string);
+    std::cout << " Min of str : "<<StringPair.first<< " , Max of str :  "<< StringPair.second<<std::endl;
+
     return 0;
 }

@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include <cstring>
+
 template<typename T>
 T Max(T x, T y)
 {
@@ -35,3 +36,4 @@ int main()
     float(*pfn)(float,float) = Max;
     return 0;
 }
+
