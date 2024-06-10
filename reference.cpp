@@ -13,14 +13,15 @@ void Print(const int &x)
     cout << "Print(const int&)" << endl;
 }
 
-//void Print(int&& ref)
-//{
-//    cout << "Print(int&&)"<<endl;
-//}
+void Print(int&& ref)
+{
+    cout << "Print(int&&)"<<endl;
+}
 int main()
 {
     int &&r1 = 52;
     int x =20;
+    //int &&r3 = x;
     int &r2 = r1;
     cout << r1 <<endl;
     cout << r2 << endl;

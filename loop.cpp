@@ -17,6 +17,7 @@ int main() {
   //    cout << x << " " ;
   //}
 
+// forwarding reference , needs to search deeply for this type
   auto &&range = Vec;
   auto beg = begin(range);
   auto en = end(range);
@@ -25,5 +26,12 @@ int main() {
     v = 5;
     cout << v << " ";
   }
+
+  auto&& ref = {1,2,3,4};
+  for(auto it : ref)
+  {
+    
+  }
+
   return 0;
 }
