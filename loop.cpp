@@ -18,7 +18,7 @@ int main() {
   //}
 
 // forwarding reference , needs to search deeply for this type
-  auto &&range = Vec;
+  vector<int> &&range = Vec;
   auto beg = begin(range);
   auto en = end(range);
   for (; beg != en; beg++) {
